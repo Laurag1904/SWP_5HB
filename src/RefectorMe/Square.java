@@ -1,37 +1,15 @@
 package RefectorMe;
 
-
-public class Square extends Geometry {
-	/*
-	 * Ein Square IST ein Rectangle
-		Falsches vererbungsmodel daher weck
-		noch nichts geändert 
-	 */
-
-	private int id = -1;
-	private final double width;
-	private final double height;
-
-	protected Square(int id, double width, double height, boolean filled, String color) throws IdException {
-		super(id, width, height, filled, color);
-
-		if (width < 0 || height < 0) {
-			System.out.println("Value less than zero not allowed!");
-		}
-		this.id = id;
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
-	public double calculateArea() {
-		return width * height;
-	}
-
-	@Override
-	public double getPerimeter() {
-		return 2 * (width + height);
-	}
-
+/**
+ * Spezialisierung eines Rechtecks.
+ * Refactoring: Erbt von Rectangle (Prinzip: Ein Quadrat IST ein Rechteck).
+ * Verhindert redundanten Code für Flächen- und Umfangsberechnung.
+ */
+class Square extends Rectangle {
+    /**
+     * Konstruktor nutzt 'side' für beide Dimensionen des Rectangle-Super-Konstruktors.
+     */
+    public Square(int id, double side, boolean filled, String color) throws IdException {
+        super(id, side, side, filled, color);
+    }
 }
-

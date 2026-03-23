@@ -1,37 +1,25 @@
 package RefectorMe;
 
+/**
+ * Repräsentiert ein Rechteck.
+ * Refactoring: Kapselung der Maße (private final) und Validierung im Konstruktor.
+ */
 public class Rectangle extends Geometry {
-	/*
-	 * hohe und breite hinzugefügt, da man daraus dann ein einheits Rechteck hat
-	 */
+    private final double width;
+    private final double height;
 
-	private int id = -1;
-	private final double width;
-	private final double height;
+    public Rectangle(int id, double width, double height, boolean filled, String color) throws IdException {
+        super(id, filled, color);
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("Breite und Höhe müssen > 0 sein.");
+        }
+        this.width = width;
+        this.height = height;
+    }
 
-	
-	protected Rectangle(int id, double width, double height, boolean filled, String color) throws IdException {
-		super(id, width, height, filled, color);
+    @Override
+    public double calculateArea() { return width * height; }
 
-		if (width < 0 || height < 0) {
-			System.out.println("Value less than zero not allowed!");
-			width = 2; 
-			height = 4;
-		}
-		this.id = id;
-		this.width = width;
-		this.height = height;
-	}
-
-	@Override
-	public double calculateArea() {
-		return width * height;
-	}
-
-	@Override
-	public double getPerimeter() {
-		return 2 * (width + height);
-	}
-
+    @Override
+    public double getPerimeter() { return 2 * (width + height); }
 }
-

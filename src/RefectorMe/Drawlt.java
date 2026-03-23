@@ -1,34 +1,30 @@
 package RefectorMe;
 
+/**
+ * Main-Klasse zum Testen der Refactoring-Ergebnisse.
+ */
 public class Drawlt {
-	public static void main(String[] args) throws IdException {
+    public static void main(String[] args) {
+        try {
+            // Objekte erstellen
+            Geometry rect = new Rectangle(1, 2.0, 6.0, true, "grey");
+            Geometry circ = new Circle(2, 3.0, false, "red");
+            Geometry sq   = new Square(3, 4.0, true, "blue");
 
-		Geometry filledGreyRect = new Rectangle(1, 2, 6, true, "grey");
-		Geometry unfilledBlueRect = new Rectangle(2, 8, 9, false, "blue");
-		Geometry filledGreyCircle = new Circle(3, 3, true, "grey");
-		Geometry unfilledRedCircle = new Circle(4, 3, false, "red");
+            // Collection nutzen
+            GeometryCollection<Geometry> shapes = new GeometryCollection<>();
+            shapes.add(rect);
+            shapes.add(circ);
+            shapes.add(sq);
 
-		GeometryCollection<Geometry> construction = new GeometryCollection<Geometry>();
+            // Testzugriff
+            System.out.println("Fläche Kreis (ID 2): " + shapes.getById(2).calculateArea());
+            System.out.println("Farbe Quadrat (ID 3): " + shapes.getById(3).getColor());
 
-		construction.add(filledGreyRect);
-		construction.add(unfilledBlueRect);
-		construction.add(filledGreyCircle);
-		construction.add(unfilledRedCircle);
-
-		try {
-			System.out.println("The area of the object is: " + construction.getById(4).calculateArea());
-		} catch (InvalidAccessException e1) {
-			System.out.println(e1.getMessage());
-		}
-
-		System.out.println(construction.contains(unfilledRedCircle));
-		try {
-			construction.remove(unfilledRedCircle);
-			System.out.println(construction.getById(4).calculateArea());
-			System.out.println(construction.contains(unfilledRedCircle));
-		} catch (InvalidAccessException e) {
-			System.out.println(e.getMessage());
-		}
-	}
+        } catch (IdException | InvalidAccessException e) {
+            System.err.println("Fehler im Programmablauf: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ungültige Parameter: " + e.getMessage());
+        }
+    }
 }
-

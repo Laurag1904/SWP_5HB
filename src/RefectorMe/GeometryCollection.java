@@ -4,33 +4,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Verwaltet eine Sammlung von Geometry-Objekten.
- * 
- * Refactoring:
- * Verwendung einer HashMap statt ArrayList.
- * Dadurch ist der Zugriff per ID effizienter (O(1)).
- * 
+ * Generische Sammlung zur Verwaltung von Geometrie-Objekten.
+ * * Refactoring:
+ * Wechsel von Liste auf HashMap<Integer, T>. 
+ * Begründung: getById(id) hat bei einer Liste O(n) Zeitaufwand, 
+ * bei einer HashMap nur O(1) (direkter Zugriff).
  */
 public class GeometryCollection<T extends Geometry> {
-
     private final Map<Integer, T> container = new HashMap<>();
 
     public void add(T geometry) {
-        container.put(geometry.getId(), geometry);
+        if (geometry != null) {
+            container.put(geometry.getId(), geometry);
+        }
     }
 
     public void remove(T geometry) {
-        container.remove(geometry.getId());
+        if (geometry != null) {
+            container.remove(geometry.getId());
+        }
     }
 
     public boolean contains(T geometry) {
-        return container.containsKey(geometry.getId());
+        return geometry != null && container.containsKey(geometry.getId());
     }
 
+    /**
+     * Sucht ein Objekt per ID.
+     * @throws InvalidAccessException wenn die ID nicht existiert.
+     */
     public T getById(int id) throws InvalidAccessException {
-        if (!container.containsKey(id)) {
-            throw new InvalidAccessException("No such element.");
+        T found = container.get(id);
+        if (found == null) {
+            throw new InvalidAccessException("Kein Element mit ID " + id + " gefunden.");
         }
-        return container.get(id);
+        return found;
     }
 }

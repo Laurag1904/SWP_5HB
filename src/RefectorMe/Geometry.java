@@ -1,82 +1,43 @@
 package RefectorMe;
 
-class IdException extends Exception {
+public abstract class Geometry implements Comparable<Geometry> {
+    private final int id;
+    private final boolean filled;
+    private final String color;
 
-	private static final long serialVersionUID = 1L;
+    /**
+     * Konstruktor für die Basisdaten jeder Form.
+     * @param id Eindeutige Identifikationsnummer.
+     * @param filled Gibt an, ob die Form ausgefüllt ist.
+     * @param color Die Farbe der Form als String.
+     * @throws IdException wenn die ID ungültig (negativ) ist.
+     */
+    protected Geometry(int id, boolean filled, String color) throws IdException {
+        if (id < 0) {
+            throw new IdException("ID muss positiv sein!");
+        }
+        this.id = id;
+        this.filled = filled;
+        this.color = color;
+    }
 
-	public IdException(String message) {
-		super(message);
-	}
+    /** Berechnet den Flächeninhalt der spezifischen Form. */
+    public abstract double calculateArea();
+
+    /** Berechnet den Umfang der spezifischen Form. */
+    public abstract double getPerimeter();
+
+    /**
+     * Vergleicht zwei Geometrien anhand ihrer Fläche.
+     * Nutzt Double.compare für Typsicherheit bei Fließkommazahlen.
+     */
+    @Override
+    public int compareTo(Geometry other) {
+        return Double.compare(this.calculateArea(), other.calculateArea());
+    }
+
+    // Getter (final, da sie nicht überschrieben werden müssen)
+    public int getId() { return id; }
+    public boolean isFilled() { return filled; }
+    public String getColor() { return color; }
 }
-
-class InvalidAccessException extends Exception {
-	private static final long serialVersionUID = 1L;
-
-	public InvalidAccessException(String message) {
-		super(message);
-	}
-}
-
-public class Geometry implements Comparable<Geometry> {
-	private int id = -1;
-	private boolean filled = false;
-	private String color = "";
-	private double width = 0;
-	private double height = 0;
-
-	public Geometry() {
-
-	}
-// duplicated code 
-	protected Geometry(int id, boolean filled, String color) throws IdException {
-
-		if (this.id == id) {
-			throw new IdException("Id must be unique!");
-		}
-		this.id = id;
-		this.filled = filled;
-		this.color = color;
-	}
-
-	protected Geometry(int id, double width, double height, boolean filled, String color) throws IdException {
-		if (this.id == id) {
-			throw new IdException("Id must be unique!");
-		}
-		this.id = id;
-		this.width = width;
-		this.height = height;
-		this.filled = filled;
-		this.color = color;
-	}
-
-	public double calculateArea() {
-		return width * height;
-	}
-
-	public double getPerimeter() {
-		return 2 * (width + height);
-	}
-
-	@Override
-	public int compareTo(Geometry c) {
-		if (this.calculateArea() > c.calculateArea())
-			return 1;
-		else if (this.calculateArea() < c.calculateArea())
-			return -1;
-		else
-			return 0;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public boolean isFilled() {
-		return filled;
-	}
-}
-
