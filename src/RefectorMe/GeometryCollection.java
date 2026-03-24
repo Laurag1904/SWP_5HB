@@ -5,7 +5,6 @@ import java.util.Map;
 
 /**
  * Generische Sammlung zur Verwaltung von Geometrie-Objekten.
- * * Refactoring:
  * Wechsel von Liste auf HashMap<Integer, T>. 
  * Begründung: getById(id) hat bei einer Liste O(n) Zeitaufwand, 
  * bei einer HashMap nur O(1) (direkter Zugriff).

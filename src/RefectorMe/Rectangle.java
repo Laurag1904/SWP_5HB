@@ -1,6 +1,7 @@
 package RefectorMe;
 
 /**
+ * Square erbt von Rectangle 
  * Repr‰sentiert ein Rechteck.
  * Refactoring: Kapselung der Maﬂe (private final) und Validierung im Konstruktor.
  */

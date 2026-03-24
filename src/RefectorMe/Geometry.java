@@ -6,6 +6,9 @@ public abstract class Geometry implements Comparable<Geometry> {
     private final String color;
 
     /**
+     * Änderungen: klasse abstract gesetzt, width und height entfernt
+     */
+    /**
      * Konstruktor für die Basisdaten jeder Form.
      * @param id Eindeutige Identifikationsnummer.
      * @param filled Gibt an, ob die Form ausgefüllt ist.
